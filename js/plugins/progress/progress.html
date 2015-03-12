@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="progress1.js"></script>
+</head>
+<body>
+    <!--<div style="width: 200px;border: 1px solid #dddddd;">-->
+        <!--<div id="progressBar" style="background:#7b7b7b;height:15px;width: 0%;"></div>-->
+    <!--</div>-->
+
+    <script>
+        var progress = new ProgressBar(0,100,'progressBar',10,1000,function(){console.log("success")});
+        function change(){
+            progress.changeSpeed(1)
+        }
+       // setTimeout(change,20000);
+        progress.createMaskProgress();
+        progress.start();
+
+    </script>
+</body>
+</html>
