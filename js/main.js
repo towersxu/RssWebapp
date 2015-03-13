@@ -1,11 +1,13 @@
 $(function () {
-    $(".show-img").on("mouseenter", function () {
-        $(this).hide().siblings(".hide-img").show().siblings(".tip").show();
+    var $tip = $(".tip");
+    $(".p-div").on("mouseenter",function(){
+        $(this).children(".tip").show().siblings().children(".hide-img").removeClass("hide-img").siblings().addClass("hide-img");
+    }).on("mouseleave",function(){
+        $(this).children(".tip").hide().siblings().children(".hide-img").removeClass("hide-img").siblings().addClass("hide-img");
     });
-    $(".tip").on("mouseout",function(){
-        $(this).hide().siblings(".hide-img").hide().siblings(".show-img").show();
+    $(".rss").on("click",function(){
+        $(".detail-hide").toggleClass("detail-nav");
     });
-
     $(".lazy").lazyload({effectspeed: 'slow'});
 
     $(".menu-nav").on("click", function () {

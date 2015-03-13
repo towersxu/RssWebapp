@@ -31,36 +31,46 @@
 <![endif]-->
 <div class="head-nav">
     <div id="head-img"><img src="img/head.png" ></div>
-    <div>
-        <img class="show-img" src="img/icon/RSS1.png"><img class="hide-img" src="img/icon/RSS.png">
+    <div class="p-div">
+        <a href="javascript:void(0)"><img class="rss" src="img/icon/RSS1.png"><img class="hide-img rss" src="img/icon/RSS.png"></a>
         <div class="tip">
             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAICAYAAADeM14FAAAALklEQVR42mNgQAIJCQn1KJyEhMT/KBywADIHKpDUgCIA0YIQRDIUIsiAam1SAwDY1SaFYcC7cwAAAABJRU5ErkJggg==" width="4" height="8">
             <span>Rss</span>
         </div>
     </div>
-    <div>
-        <img class="show-img" src="img/icon/GitHub1.png"><img class="hide-img" src="img/icon/GitHub.png">
+    <div class="p-div">
+        <a href="http://github.com"><img src="img/icon/GitHub1.png"><img class="hide-img" src="img/icon/GitHub.png"></a>
         <div class="tip">
             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAICAYAAADeM14FAAAALklEQVR42mNgQAIJCQn1KJyEhMT/KBywADIHKpDUgCIA0YIQRDIUIsiAam1SAwDY1SaFYcC7cwAAAABJRU5ErkJggg==" width="4" height="8">
             <span>Github</span>
         </div>
     </div>
-    <div>
-        <img class="show-img" src="img/icon/Evernote1.png"><img class="hide-img" src="img/icon/Evernote.png">
+    <div class="p-div">
+        <a href="https://app.yinxiang.com/pub/987427795/xt"> <img src="img/icon/Evernote1.png"><img class="hide-img" src="img/icon/Evernote.png"></a>
         <div class="tip">
             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAICAYAAADeM14FAAAALklEQVR42mNgQAIJCQn1KJyEhMT/KBywADIHKpDUgCIA0YIQRDIUIsiAam1SAwDY1SaFYcC7cwAAAABJRU5ErkJggg==" width="4" height="8">
             <span>Evernote</span>
         </div>
     </div>
-    <div>
-        <img class="show-img" src="img/icon/email1.png"><img class="hide-img" src="img/icon/email.png">
+    <div class="p-div">
+        <a href="mailto:987427795@qq.com"><img src="img/icon/email1.png"><img class="hide-img" src="img/icon/email.png"></a>
         <div class="tip">
             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAICAYAAADeM14FAAAALklEQVR42mNgQAIJCQn1KJyEhMT/KBywADIHKpDUgCIA0YIQRDIUIsiAam1SAwDY1SaFYcC7cwAAAABJRU5ErkJggg==" width="4" height="8">
-            <span>email</span>
+            <span>Email</span>
         </div>
     </div>
 </div>
-
+<div class="detail-hide">
+    <div class="title">RSS订阅</div>
+    <!--<input type="search" placeholder="搜索" >-->
+    <div>
+        <ul id="rss-menu" class="rss-list">
+            <li><img src="http://www.zhihu.com/favicon.ico" width="16" height="16"><a href="javascript:void(0)" class="rss-item" title="http://www.zhihu.com/rss">知乎每日精选</a></li>
+            <li><img src="http://www.ibm.com/favicon.ico" width="16" height="16"><a href="javascript:void(0)" class="rss-item" title="http://www.ibm.com/developerworks/cn/views/global/rss/libraryview.jsp?site_id=10&contentarea_by=Mobile%20development&topic_by=-1&product_by=&type_by=%E6%89%80%E6%9C%89%E7%B1%BB%E5%88%AB&search_by=&industry_by=&sort_by=Date&series_title_by=">IBM developerWorks</a></li>
+            <li><img src="http://www.techweb.com.cn/favicon.ico" width="16" height="16"><a href="javascript:void(0)" class="rss-item" title="http://www.techweb.com.cn/rss/hotnews.xml">TechWeb 每日热点</a></li>
+        </ul>
+    </div>
+</div>
 <script src="js/vendor/jquery-1.10.2.min.js"></script>
 <script src="js/plugins/xmlParser.js"></script>
 <script src="js/main.js"></script>
