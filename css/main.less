@@ -15,7 +15,6 @@ body, canvas, div, img {
 }
 
 pre {
-  white-space: pre;
   white-space: pre-wrap;
   word-wrap: break-word;
 }
@@ -25,6 +24,7 @@ pre {
   width: 4em;
   height: 100%;
   border-right: 1px solid darken(@navColor, 10%);
+  -webkit-transform: translateZ(0);
   position: fixed;
   z-index: 10;
   top: 0;
@@ -83,9 +83,11 @@ pre {
   width: 25em;
   height: 100%;
   overflow: hidden;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
+  background: @navColor;
+  z-index: 9;
   border-right: 3px solid darken(@navColor, 15%);
   -webkit-transform: translate3d(-25em, 0, 0);
   transform: translate3d(-25em, 0, 0);
@@ -108,7 +110,6 @@ pre {
       img{
         margin-right:1em;
         float: left;
-
         -webkit-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
         -webkit-transition: -webkit-transform 0.4s ease-in-out;
@@ -204,5 +205,18 @@ pre {
       display: none;
     }
   }
-
+}
+@media screen and (max-width:700px) {
+  .head-nav{
+    -webkit-transform: translate3d(-4em, 0, 0);
+    transform: translate3d(-4em, 0, 0);
+    -webkit-transition: -webkit-transform 0.4s ease-in-out;
+    transition: transform 0.4s ease-in-out;
+  }
+  .container-head{
+    width: 80%;
+  }
+  .container{
+    width: 80%;
+  }
 }
