@@ -8,41 +8,16 @@ $(function () {
     $(".rss").on("click",function(){
         $(".detail-hide").toggleClass("detail-nav");
     });
-    $(".lazy").lazyload({effectspeed: 'slow'});
-
-    $(".menu-nav").on("click", function () {
-        $(".menu-content").toggleClass("menu-content-show");
-        $(".article-box").toggleClass("article-box-change");
-    });
-    $(".head-nav").on("mouseenter", function () {
-        $(".scroll-nav").removeClass("head-nav-down");
-
-    });
-    /* $(".head-img").on("mouseenter",function(){
-     $(".head-info").addClass("head-info-show");
-     });
-     */
-    $(".main-nav").on("click", "li", function (event) {
-        event.stopPropagation();
-        $(this).siblings().children('a').removeClass("selected");
-        $(this).children('a').addClass("selected").parent().siblings().children('a').removeClass("selected").siblings().hide('0.3');
-        $(this).children('ul').show('0.3').find('a').first().addClass("selected").parent().siblings().children('a').removeClass("selected");
-    });
-    $(".head-img").on("click", function () {
-        $(".head-info").toggleClass("head-info-show");
-    });
-    $(".RSS").on("click", function () {
-        $("#rss-menu").show('0.3');
-    });
     var $container = $(".container");
-    $container.on("click",".add",function(e){
-        $(e.target).siblings(".article-content").hide().siblings(".article-detail").show().siblings(".add").hide().siblings(".sub").show().parent().addClass("show-article");
-    });
-    $container.on("click",".sub",function(e){
-        $(e.target).siblings(".article-content").show().siblings(".article-detail").hide().siblings(".add").show().siblings(".sub").hide().parent().removeClass("show-article");
+    $container.on("click",".article-box",function(e){
+        var attr = e.target.getAttribute("sourceurl");
+        if(attr){
+            window.location.href=attr;
+        }
+        $(this).children(".article-content").hide().siblings(".article-detail").show();
     });
 
-    $(".rss-item").on("click",function(e){
+    $("#rss-menu").on("click",function(e){
         var data = {};
         data.rssurl= $(e.target).attr('title');
         $container.append('<div id="loader-wrapper"><div id="loader"></div></div>');
@@ -84,14 +59,13 @@ $(function () {
             }else{
                 imgSrc = imgSrc[0];
             }
-            article = "<div class='article-box'>" +
-            "<div class='icon add'>-</div>" +
-            "<div class='icon sub'>+</div>" +
-            "<a href='"+guid+"'>"+title+"</a>" +
+            article = "<div class='article-box' >" +
+            "<div class='info' sourceUrl='"+guid+"'></div>"+
+            "<a href='javascript:void(0)'>"+title+"</a>" +
             '<img '+imgSrc+'onerror="this.style.display=\'none\';return true;"  width="100" height="100" style="float: left;margin: 1em"><p class="article-content">' +
             sortDes
             + "</p>" +
-            '<pre class="article-detail" style="text-indent: 2em; display:none">' + des + '</pre>'+
+            '<pre class="article-detail">' + des + '</pre>'+
             "</div>"+article;
             //$(".container").prepend(article);
             itemLength --;

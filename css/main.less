@@ -141,4 +141,68 @@ pre {
   transform: translate3d(4em, 0, 0);
   -webkit-transition: -webkit-transform 0.4s ease-in-out;
   transition: transform 0.4s ease-in-out;
+  z-index: 9;
+  background: @navColor;
+}
+.container-head{
+  width: 40em;
+  padding:3em 0 2em 1em;
+  border-bottom: 3px solid darken(@navColor,50%);
+  margin: 0 auto;
+  overflow: hidden;
+  img{
+    float: left;
+  }
+  div{
+    color: darken(@navColor,50%);
+    font-family: gotham, helvetica, arial, sans-serif;
+    font-size: 1.75em;
+  }
+}
+.container{
+  width: 40em;
+  margin: 0 auto;
+  cursor: pointer;
+  color: darken(@navColor, 50%);
+  -webkit-font-smoothing: antialiased;
+  font-family: gotham, helvetica, arial, sans-serif;
+
+  .article-box{
+    padding:0.5em 0.5em 0 0;
+    position: relative;
+    overflow: hidden;
+    border-bottom:1px solid darken(@navColor,20%);
+    a{
+      color: darken(@navColor,75%);
+      text-decoration: none;
+    }
+    &:hover{
+      background: @greenColor;
+      color: @navColor;
+      a{
+        color: @navColor;
+        text-decoration: none;
+      }
+    }
+    .info{
+      background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAA40lEQVR42mNgGAWkgv///wsC8Uog/vafePANqkeQGAtW/icfrCTGApjLlUnwtTLMJ8QoBgMygpY4fVB1z7CILwfis0AsRakFIIN4sYjvhZpxE5slpFjAiENcGIjP47KE5KAFqvUF4n1A/BVHirmK7BiSLACqayUiSV4lN4h8oWp/AHEeLPMAaQEgPkVxEEGDBQTy0MT3UCuSYUAQS+o6R41kSvOMRvOiAlth9xyI/WH5BIjToWJkFXa4imuQgfJAvJui4ppAxH+E0i+BOJSalRAyWAXEotSu5ajvajQLqO9qagEARsmUlZnhg9wAAAAASUVORK5CYII=") -0px -0px no-repeat;
+      background-size: 1.5em 1.5em;
+      width: 1.5em;height: 1.5em;
+      position: absolute;
+      top: 0.5em;
+      right: 0.5em;
+      cursor: pointer;
+      vertical-align: top;
+      &:hover{
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAp0lEQVR42mNgGAWkgv///wsC8Uog/vafePANqkeQGAtW/icfrCTGgm8UWPCNGAsoApRYEA7EhkD8hFYWOELl1fBZQokFr4FYn5AlxFiwCeRaIOYkoE4LiP+SbAEJ+QVkwT9yfMAOxBOB+C2a3ndAbEKNIJqIIw6cqRXJbwcqmVIto9G8qKB5YUfb4prIeHkJxKHUzFTIYBUQi1K7lqO+q9EsoL6rqQUAMdfNwiDn8JQAAAAASUVORK5CYII=") -0px -0px no-repeat;
+      }
+    }
+    .article-content{
+      font-size: 0.75em;
+    }
+    .article-detail{
+      display: none;
+    }
+  }
+
 }
