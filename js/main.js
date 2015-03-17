@@ -1,5 +1,6 @@
 $(function () {
-    var $tip = $(".tip");
+    var $tip = $(".tip"),
+        $container = $(".container");
     $(".p-div").on("mouseenter",function(){
         $(this).children(".tip").show().siblings().children(".hide-img").removeClass("hide-img").siblings().addClass("hide-img");
     }).on("mouseleave",function(){
@@ -8,7 +9,7 @@ $(function () {
     $(".rss").on("click",function(){
         $(".detail-hide").toggleClass("detail-nav");
     });
-    var $container = $(".container");
+
     $container.on("click",".article-box",function(e){
         var attr = e.target.getAttribute("sourceurl");
         if(attr){
@@ -21,7 +22,7 @@ $(function () {
         var data = {};
         data.rssurl= $(e.target).attr('title');
         $container.append('<div id="loader-wrapper"><div id="loader"></div></div>');
-        $(".head-info").removeClass("head-info-show");
+        $(".detail-hide").removeClass("detail-nav");
         $.ajax({
             url: 'http://2.xthtml5.sinaapp.com/rss',
             dataType: "jsonp",
@@ -72,11 +73,6 @@ $(function () {
         }
         $container.prepend(article);
     }
-    // $("#txt").textSplit();
-//    var script = document.createElement('script');
-//    script.src = "http://chabudai.sakura.ne.jp/blogparts/honehoneclock/honehone_clock_tr.js";
-//    script.charset="Shift_JIS";
-//    document.getElementById("lazy-honehone").appendChild(script);
 
     function loadDefaultArticle(){
         $.ajax({
@@ -93,16 +89,6 @@ $(function () {
                     + "</div>";
                     $(".container").append(article);
                 }
-                //$(document).snowfall('clear');
-                //$(document).snowfall({
-                //    round: false,
-                //    minSize: 20,
-                //    maxSize: 50,
-                //    maxSpeed: 2,
-                //    text: '*',
-                //    flakeColor: '',
-                //    flakeCount: 5
-                //});
             }
         });
     }
@@ -118,4 +104,24 @@ $(function () {
     }else{
         $(".rss-item")[0].click();
     }
+    var startX, startY, x, y;
+    function touchStart(e) {//触摸开始
+        var touch = e.touches[0];
+        startY = touch.pageY;   //刚触摸时的坐标
+        startX = touch.pageX;
+    }
+    function touchMove(e) {//滑动
+        var touch = e.touches[0];
+        y = touch.pageY - startY;//滑动的距离
+        x = touch.pageX - startX;
+        if(x > 0 && x > y && x + y > 0){  //右
+            $(".head-nav").addClass("head-nav-show");
+        }
+        if(x < 0 && x < y && x + y <0){   //左
+            $(".head-nav").removeClass("head-nav-show");
+            $(".detail-hide").removeClass("detail-nav");
+        }
+    }
+    document.addEventListener('touchstart', touchStart, false);
+    document.addEventListener('touchmove', touchMove, false);
 });
