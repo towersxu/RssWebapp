@@ -9,7 +9,11 @@ $(function () {
     $(".rss").on("click",function(){
         $(".detail-hide").toggleClass("detail-nav");
     });
-
+    $container.on("mouseenter",".info",function(){
+        $(this).siblings(".uptip").addClass("uptip-show");
+    }).on("mouseleave",".info",function(){
+        $(this).siblings(".uptip").removeClass("uptip-show");
+    });
     $container.on("click",".article-box",function(e){
         var attr = e.target.getAttribute("sourceurl");
         if(attr){
@@ -18,9 +22,9 @@ $(function () {
         $(this).children(".article-content").hide().siblings(".article-detail").show();
     });
 
-    $("#rss-menu").on("click",function(e){
+    $("#rss-menu").on("click",".rss-item",function(e){
         var data = {};
-        data.rssurl= $(e.target).attr('title');
+        data.rssurl= $(this).attr('title');
         $container.append('<div id="loader-wrapper"><div id="loader"></div></div>');
         $(".detail-hide").removeClass("detail-nav");
         $.ajax({
@@ -42,6 +46,11 @@ $(function () {
     });
     function appendContainer(json){
         var items = json.rss.channel.item;
+        var channelTitle = json.rss.channel.title;
+        var channelUrl = json.rss.channel.link;
+        var imgUrl = /http:\/\/(\S+?)\//.exec(channelUrl)[0] || channelUrl+"/";
+        $("#container-img").attr("src",imgUrl+"favicon.ico");
+        $("#container-title").empty().append(channelTitle);
         var imgReg = /src=\S*\.(jpg|png|jpeg)\S*"/g;
         var itemLength = items.length;
         var article = "";
@@ -62,6 +71,7 @@ $(function () {
             }
             article = "<div class='article-box' >" +
             "<div class='info' sourceUrl='"+guid+"'></div>"+
+            "<div class='uptip'><span>查看原文</span></div>"+
             "<a href='javascript:void(0)'>"+title+"</a>" +
             '<img '+imgSrc+'onerror="this.style.display=\'none\';return true;"  width="100" height="100" style="float: left;margin: 1em"><p class="article-content">' +
             sortDes

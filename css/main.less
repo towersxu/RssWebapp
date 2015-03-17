@@ -190,8 +190,9 @@ pre {
       background-size: 1.5em 1.5em;
       width: 1.5em;height: 1.5em;
       position: absolute;
+      z-index: 2;
       top: 0.5em;
-      right: 0.5em;
+      right: 1em;
       cursor: pointer;
       vertical-align: top;
       &:hover{
@@ -203,6 +204,34 @@ pre {
     }
     .article-detail{
       display: none;
+    }
+    .uptip {
+      margin: 0;
+      position: absolute;
+      top: 1em;
+      z-index: 1;
+      right: 0;
+      visibility: hidden;
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+      -webkit-transition: -webkit-transform 0.2s ease-out;
+      transition: transform 0.2s ease-out;
+      span {
+        font-size: 0.8em;
+        left: 0.3em;
+        top: 0.5em;
+        background: @navColor;
+        color: @greenColor;
+        border-radius: 2px;
+        padding: 4px 7px;
+      }
+    }
+    .uptip-show{
+      visibility: visible;
+      -webkit-transform: translate3d(0, 1em, 0);
+      transform: translate3d(0, 1em, 0);
+      -webkit-transition: -webkit-transform 0.2s ease-out;
+      transition: transform 0.2s ease-out;
     }
   }
 }
