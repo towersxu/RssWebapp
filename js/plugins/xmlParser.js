@@ -21,8 +21,8 @@ function xmlToJson(xml) {
         var xmlChildren = xml.childNodes;
         var xmlLength = xmlChildren.length;
         for (var i = 0; i < xmlLength; i++) {
-            var item = xmlChildren.item(i);
-            var nodeName = item.nodeName;
+            var item = xmlChildren.item(i),
+                nodeName = item.nodeName;
             if (nodeName == "#text" || nodeName == "#cdata-section") {
                 obj = xmlToJson(item);
             } else {
@@ -59,9 +59,7 @@ function loadXML(xmlString) {
             } catch (e) {
             }
         }
-    }
-    //支持Mozilla浏览器
-    else if (window.DOMParser && document.implementation && document.implementation.createDocument) {
+    }else if (window.DOMParser && document.implementation && document.implementation.createDocument) {//支持Mozilla浏览器
         try {
             /* DOMParser 对象解析 XML 文本并返回一个 XML Document 对象。
              * 要使用 DOMParser，使用不带参数的构造函数来实例化它，然后调用其 parseFromString() 方法
@@ -72,8 +70,7 @@ function loadXML(xmlString) {
             xmlDoc = domParser.parseFromString(xmlString, 'text/xml');
         } catch (e) {
         }
-    }
-    else {
+    }else {
         return null;
     }
     return xmlDoc;
