@@ -5,6 +5,7 @@ $(function () {
         index = 0,
         $this,
         channel,
+        width = document.body.clientWidth,
         startX, startY, x, y,article;
     $("#rss-menu").on("click","li",function(e){
         var data = {};
@@ -79,23 +80,63 @@ $(function () {
         if(attr){
             window.location.href=attr;
         }
-        $(this).children(".article-content").hide().siblings(".article-detail").show();
+
+        //$("#mask").addClass("masks");
+        //$("#article-area-id").addClass("masks").children().addClass("show-article-area");
+        //$(this).children(".article-content").hide().siblings(".article-detail").show();
+        addDetail($(this).children(".article-content").attr('idx'));
     });
 
+    function addDetail(idx){
+        var items = channel.item,
+            imgReg = /src=\S*\.(jpg|png|jpeg)\S*"/g,
+            widReg = /<img.*?>/g,
+            description = items[idx].description,
+            maxWidth,des;
+        width>600? maxWidth = "width='640'":"width='"+width*0.8+"'";
+        des = description.replace(imgReg,function($1){
+            return $1+' onerror=\"this.style.display=\'none\';return true;\"';
+        });
+        des = des.replace(widReg,function($1){
+            if(!/( |")width="\d+"/.exec($1)){
+                $1 = $1.replace(imgReg,function(arg1){
+                    return arg1+' width="300"';
+                });
+            }
+            if(width<=600){
+                return $1.replace(/( |")width="(\d+)"/,function($1,$2,$3,$4){
+                    if(parseInt($3)>width*0.6){
+                        return " width='"+width*0.6+"'";
+                    }
+                    return $1;
+                });
+            }else{
+                return $1.replace(/( |")width="(\d+)"/,function($1,$2,$3,$4){
+                    if(parseInt($3)>640){
+                        return " width='640'"
+                    }
+                    return $1;
+                });
+            }
+
+        });
+        var str = "<h2>"+items[idx].title+"</h2>" +
+            '<pre class="article-detail">' + des + '</pre>';
+        $(".ifm").addClass("ifm-show");
+        $("#ifm-content").addClass("masks");
+        myframe.window.get(str);
+    }
     function addContainer(count){
         var items = channel.item,
             article = "",
             imgReg = /src=\S*\.(jpg|png|jpeg)\S*"/g,
             itemLength = items.length;
         if(itemLength > index){
-            while(index <= (loadCount+1) *count){
+            while(itemLength > index && index <= (loadCount+1) *count){
                 var item = items[index],
                     title = item.title,
                     description = item.description,
                     imgSrc = description.match(imgReg),
-                    des = description.replace(imgReg,function($1){
-                        return $1+' onerror=\"this.style.display=\'none\';return true;\"';
-                    }),
                     guid = item.guid || item.link,
                     sortDes = description.replace(/<(.*?)>/g,"").substr(0,200)+"...";
                 if(!imgSrc){
@@ -107,10 +148,11 @@ $(function () {
                     "<div class='info' sourceUrl='"+guid+"'></div>"+
                     "<div class='uptip'><span>查看原文</span></div>"+
                     "<a href='javascript:void(0)'>"+title+"</a>" +
-                    '<img '+imgSrc+'onerror="this.style.display=\'none\';return true;"  width="100" height="100" style="float: left;margin: 1em"><p class="article-content">' +
+                    '<img '+imgSrc+'onerror="this.style.display=\'none\';return true;"  width="100" height="100" style="float: left;margin: 1em">' +
+                    '<p class="article-content" idx="'+index+'">' +
                     sortDes
                     + "</p>" +
-                    '<pre class="article-detail">' + des + '</pre>'+
+                    //'<pre class="article-detail">' + des + '</pre>'+
                     "</div>"+article;
                 index++;
             }
@@ -143,7 +185,7 @@ $(function () {
                 for (var i = 0; i < data.length; i++) {
                     article = "<div class='article-box'><a href='" + data[i][2] + "'>" + data[i][1] + "</a>" +
                         '<img src="http://placehold.it/100x100" width="100" height="100" style="float: left;margin: 1em">' +
-                        '<p style="text-indent: 2em;">' + data[i][3] + '</p>'
+                        '<p>' + data[i][3] + '</p>'
                         + "</div>";
                     $(".container").append(article);
                 }
@@ -159,3 +201,14 @@ $(function () {
         }
     });
 });
+function setIframe(count,width) {
+    var e = document.getElementById("ifm-id");
+//    console.log(e.scrollHeight);
+//    console.log(e.clientHeight);
+//    console.log(e.offsetHeight);
+    document.getElementById("ifm-id").style.height = (count+10)+"px";
+//    document.getElementById("ifm-id").style.width = (width)+"px";
+    document.getElementById("ifm-id").style.top = "0";
+    document.getElementById("ifm-id").style.left = "100px";
+    document.getElementById("ifm-id").scrolling="no"
+}
