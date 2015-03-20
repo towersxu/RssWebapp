@@ -20,6 +20,7 @@ $(function () {
             jsonpCallback: "callbacks",
             success: function (data) {
                 $container.empty();
+                index = 0;
                 var content = data['key'];
                 content = content.replace(/\n+|\r+/g, "").replace(/\>\s+/g, ">");
                 var xmldoc = loadXML(content);
@@ -93,11 +94,10 @@ $(function () {
             widReg = /<img.*?>/g,
             description = items[idx].description,
             maxWidth,des;
-        width>600? maxWidth = "width='640'":"width='"+width*0.8+"'";
+//        width>600? maxWidth = "width='640'":"width='"+width*0.8+"'";
         des = description.replace(imgReg,function($1){
             return $1+' onerror=\"this.style.display=\'none\';return true;\"';
-        });
-        des = des.replace(widReg,function($1){
+        }).replace(widReg,function($1){
             if(!/( |")width="\d+"/.exec($1)){
                 $1 = $1.replace(imgReg,function(arg1){
                     return arg1+' width="300"';
@@ -148,7 +148,7 @@ $(function () {
                     "<div class='info' sourceUrl='"+guid+"'></div>"+
                     "<div class='uptip'><span>查看原文</span></div>"+
                     "<a href='javascript:void(0)'>"+title+"</a>" +
-                    '<img '+imgSrc+'onerror="this.style.display=\'none\';return true;"  width="100" height="100" style="float: left;margin: 1em">' +
+                    '<img '+imgSrc+'onerror="this.style.display=\'none\';return true;"  width="100" height="100" style="float: left;margin: 1em;border:1px solid #fefefe">' +
                     '<p class="article-content" idx="'+index+'">' +
                     sortDes
                     + "</p>" +
@@ -201,14 +201,19 @@ $(function () {
         }
     });
 });
-function setIframe(count,width) {
-    var e = document.getElementById("ifm-id");
-//    console.log(e.scrollHeight);
-//    console.log(e.clientHeight);
-//    console.log(e.offsetHeight);
-    document.getElementById("ifm-id").style.height = (count+10)+"px";
-//    document.getElementById("ifm-id").style.width = (width)+"px";
-    document.getElementById("ifm-id").style.top = "0";
-    document.getElementById("ifm-id").style.left = "100px";
-    document.getElementById("ifm-id").scrolling="no"
+function setIframe(count) {
+    var e = document.getElementById("ifm-id"),
+        clientWidth = document.body.clientWidth,
+        sty;
+    sty="height:"+(count+10)+"px;top:"+$(document).scrollTop()+"px;left:"+ (clientWidth>600?clientWidth*0.2+"px":clientWidth*0.1+"px");
+    e.setAttribute("style",sty);
+    e.scrolling="no";
+    //重置主页面高度，解决如果弹出文章高度超过页面高度时显示不完全。
+    if(count+$(document).scrollTop() > document.body.clientHeight){
+        document.body.height = count+$(document).scrollTop();
+    }
+}
+function closeIframe(){
+    $(".ifm").removeClass("ifm-show");
+    $("#ifm-content").removeClass("masks");
 }

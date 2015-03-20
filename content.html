@@ -10,19 +10,19 @@
         <div class="article-area" id="art">
         </div>
     </div>
+    <div id="close"></div>
     <script>
+        var close_e = document.getElementById("close"),
+                e =  document.getElementById("art");
         function get(data){
-           var e =  document.getElementById("art");
             e.innerHTML = data;
-           // e.setAttribute("class","show-article-area");
-           // console.log(data);
-            //parent.document.all("ifm-id").style.height=3000;
-            //parent.document.all("ifm-id").style.height=document.body.scrollHeight;
-            //parent.document.all("ifm-id").style.width=document.body.scrollWidth;
-            console.log(e.height);
-            console.log(document.body.offsetHeight);
-            parent.setIframe(document.body.offsetHeight,document.body.scrollWidth,0,20);
+            close_e.setAttribute("class","close");
+            parent.setIframe(document.body.offsetHeight);
         }
+        close_e.addEventListener("click",function(){
+            parent.closeIframe();
+            close_e.removeAttribute("class");
+        });
 
     </script>
 </body>
