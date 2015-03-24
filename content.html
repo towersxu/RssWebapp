@@ -11,12 +11,16 @@
         </div>
     </div>
     <div id="close"></div>
+    <script src="js/vendor/jquery-1.10.2.min.js"></script>
     <script>
         var close_e = document.getElementById("close"),
                 e =  document.getElementById("art");
         function get(data){
             e.innerHTML = data;
             close_e.setAttribute("class","close");
+            resizeIframe();
+        }
+        function resizeIframe(){
             parent.setIframe(document.body.offsetHeight);
         }
         close_e.addEventListener("click",function(){

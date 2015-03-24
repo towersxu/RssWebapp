@@ -1,4 +1,7 @@
 $(function () {
+    if(!document.addEventListener){
+        alert("对不起，由于时间关系，没有做兼容IE浏览器。请使用chrome浏览器查看！");
+    }
     var $tip = $(".tip"),
         $container = $(".container"),
         loadCount = 0,
@@ -80,6 +83,7 @@ $(function () {
         var attr = e.target.getAttribute("sourceurl");
         if(attr){
             window.location.href=attr;
+            return false;
         }
 
         //$("#mask").addClass("masks");
@@ -87,14 +91,15 @@ $(function () {
         //$(this).children(".article-content").hide().siblings(".article-detail").show();
         addDetail($(this).children(".article-content").attr('idx'));
     });
-
     function addDetail(idx){
         var items = channel.item,
             imgReg = /src=\S*\.(jpg|png|jpeg)\S*"/g,
             widReg = /<img.*?>/g,
             description = items[idx].description,
+ //        srcReg = /http:\/\/\S*\.(jpg|png|jpeg)\S*(?=")/g,
             maxWidth,des;
 //        width>600? maxWidth = "width='640'":"width='"+width*0.8+"'";
+
         des = description.replace(imgReg,function($1){
             return $1+' onerror=\"this.style.display=\'none\';return true;\"';
         }).replace(widReg,function($1){
@@ -199,13 +204,19 @@ $(function () {
             $(".loadImg").addClass("load");
             addContainer(10);
         }
+        var $ifm = $("#ifm-id");
+        var ifmHeight = $(document.getElementById("ifm-id").contentWindow.document.body).height();
+        if($ifm.height() !== (ifmHeight+50)){
+            $ifm.height(ifmHeight + 50);
+        }
     });
 });
+
 function setIframe(count) {
     var e = document.getElementById("ifm-id"),
         clientWidth = document.body.clientWidth,
         sty;
-    sty="height:"+(count+10)+"px;top:"+$(document).scrollTop()+"px;left:"+ (clientWidth>600?clientWidth*0.2+"px":clientWidth*0.1+"px");
+    sty="height:"+(count+50)+"px;top:"+$(document).scrollTop()+"px;left:"+ (clientWidth>600?clientWidth*0.2+"px":clientWidth*0.1+"px");
     e.setAttribute("style",sty);
     e.scrolling="no";
     //重置主页面高度，解决如果弹出文章高度超过页面高度时显示不完全。
