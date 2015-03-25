@@ -40,7 +40,6 @@ $(function () {
             appendContainer(article);
         }else{
             $(".rss-item")[2].click();
-            //loadDefaultArticle();
         }
     }else{
         $(".rss-item")[2].click();
@@ -85,10 +84,6 @@ $(function () {
             window.location.href=attr;
             return false;
         }
-
-        //$("#mask").addClass("masks");
-        //$("#article-area-id").addClass("masks").children().addClass("show-article-area");
-        //$(this).children(".article-content").hide().siblings(".article-detail").show();
         addDetail($(this).children(".article-content").attr('idx'));
     });
     function addDetail(idx){
@@ -96,9 +91,7 @@ $(function () {
             imgReg = /src=\S*\.(jpg|png|jpeg)\S*"/g,
             widReg = /<img.*?>/g,
             description = items[idx].description,
- //        srcReg = /http:\/\/\S*\.(jpg|png|jpeg)\S*(?=")/g,
-            maxWidth,des;
-//        width>600? maxWidth = "width='640'":"width='"+width*0.8+"'";
+            des;
 
         des = description.replace(imgReg,function($1){
             return $1+' onerror=\"this.style.display=\'none\';return true;\"';
@@ -157,7 +150,6 @@ $(function () {
                     '<p class="article-content" idx="'+index+'">' +
                     sortDes
                     + "</p>" +
-                    //'<pre class="article-detail">' + des + '</pre>'+
                     "</div>"+article;
                 index++;
             }
