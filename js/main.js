@@ -9,7 +9,17 @@ $(function () {
         items,
         width = document.body.clientWidth,
         imgReg = /src=\S*\.(jpg|png|jpeg)\S*"/g,
-        startX, startY, x, y,article;
+        startX, startY, x, y,article,
+        navObj = {
+            "sprite-RSS":"sprite-RSS1",
+            "sprite-RSS1":"sprite-RSS",
+            "sprite-Evernote":"sprite-Evernote1",
+            "sprite-Evernote1":"sprite-Evernote",
+            "sprite-email":"sprite-email1",
+            "sprite-email1":"sprite-email",
+            "sprite-GitHub":"sprite-GitHub1",
+            "sprite-GitHub1":"sprite-GitHub"
+        };
 
     $("#rss-menu").on("click","li",function(e){
         var data = {};
@@ -68,12 +78,25 @@ $(function () {
     document.addEventListener('touchstart', touchStart, false);
     document.addEventListener('touchmove', touchMove, false);
 
-    $(".p-div").on("mouseenter",function(){
-        $(this).children(".tip").show().siblings().children(".hide-img").removeClass("hide-img").siblings().addClass("hide-img");
-    }).on("mouseleave",function(){
-        $(this).children(".tip").hide().siblings().children(".hide-img").removeClass("hide-img").siblings().addClass("hide-img");
+//    $(".p-div").on("mouseenter",function(){
+//        $(this).children(".tip").show();//.siblings().children(".hide-img").removeClass("hide-img").siblings().addClass("hide-img");
+//    }).on("mouseleave",function(){
+//        $(this).children(".tip").hide();//.siblings().children(".hide-img").removeClass("hide-img").siblings().addClass("hide-img");
+//    });
+    $(".p-div").on("mouseenter",".sprite",function(){
+        $this = $(this);
+        var spriteElement = $this.attr("class").split(" ")[1];
+        if(spriteElement){
+            $this.removeClass(spriteElement).addClass(navObj[spriteElement]).siblings(".tip").show();
+        }
+    }).on("mouseleave",".sprite",function(){
+        $this = $(this);
+        var spriteElement = $this.attr("class").split(" ")[1];
+        if(spriteElement){
+            $this.removeClass(spriteElement).addClass(navObj[spriteElement]).siblings(".tip").hide();
+        }
     });
-    $(".rss").on("click",function(){
+    $("#RSS").on("click",function(){
         $(".detail-hide").toggleClass("detail-nav");
     });
     $container.on("mouseenter",".info",function(){
