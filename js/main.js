@@ -2,14 +2,15 @@ $(function () {
     if(!document.addEventListener){
         alert("对不起，由于时间关系，没有做兼容IE浏览器。请使用chrome浏览器查看！");
     }
-    var $tip = $(".tip"),
-        $container = $(".container"),
+    var $container = $(".container"),
         loadCount = 0,
         index = 0,
         $this,
-        channel,
+        items,
         width = document.body.clientWidth,
+        imgReg = /src=\S*\.(jpg|png|jpeg)\S*"/g,
         startX, startY, x, y,article;
+
     $("#rss-menu").on("click","li",function(e){
         var data = {};
         data.rssurl= $(this).children(".rss-item").attr('title');
@@ -47,11 +48,13 @@ $(function () {
 
     function touchStart(e) {//触摸开始
         var touch = e.touches[0];
+
         startY = touch.pageY;   //刚触摸时的坐标
         startX = touch.pageX;
     }
     function touchMove(e) {//滑动
         var touch = e.touches[0];
+
         y = touch.pageY - startY;//滑动的距离
         x = touch.pageX - startX;
         if(x > 0 && x > y && x + y > 0){  //右
@@ -80,20 +83,18 @@ $(function () {
     });
     $container.on("click",".article-box",function(e){
         var attr = e.target.getAttribute("sourceurl");
+
         if(attr){
-            window.location.href=attr;
+            window.location.href = attr;
             return false;
         }
         addDetail($(this).children(".article-content").attr('idx'));
     });
     function addDetail(idx){
-        var items = channel.item,
-            imgReg = /src=\S*\.(jpg|png|jpeg)\S*"/g,
-            widReg = /<img.*?>/g,
-            description = items[idx].description,
-            des;
+        var widReg = /<img.*?>/g,
+            description = items[idx].description;
 
-        des = description.replace(imgReg,function($1){
+        description = description.replace(imgReg,function($1){
             return $1+' onerror=\"this.style.display=\'none\';return true;\"';
         }).replace(widReg,function($1){
             if(!/( |")width="\d+"/.exec($1)){
@@ -116,19 +117,17 @@ $(function () {
                     return $1;
                 });
             }
-
         });
-        var str = "<h2>"+items[idx].title+"</h2>" +
-            '<pre class="article-detail">' + des + '</pre>';
+        description = "<h2>"+items[idx].title+"</h2>" +
+            '<pre class="article-detail">' + description + '</pre>';
         $(".ifm").addClass("ifm-show");
         $("#ifm-content").addClass("masks");
-        myframe.window.get(str);
+        myframe.window.get(description);
     }
     function addContainer(count){
-        var items = channel.item,
-            article = "",
-            imgReg = /src=\S*\.(jpg|png|jpeg)\S*"/g,
+        var article = "",
             itemLength = items.length;
+
         if(itemLength > index){
             while(itemLength > index && index <= (loadCount+1) *count){
                 var item = items[index],
@@ -159,37 +158,18 @@ $(function () {
             $(".load").hide();
         }
     }
-
     function appendContainer(json){
-            channel = json.rss.channel;
-        var channelTitle = channel.title,
+        var channel = json.rss.channel,
+            channelTitle = channel.title,
             channelUrl = channel.link,
             regUrl = /http:\/\/(\S+?)\//.exec(channelUrl),
             imgUrl = regUrl?regUrl[0]:channelUrl+"/";
+            items = channel.item;
         $("#container-img").attr("src",imgUrl+"favicon.ico");
         $("#container-title").empty().append(channelTitle);
         addContainer(20);
         $("#mask-area").children().removeClass("masks");
     }
-    function loadDefaultArticle(){
-        $.ajax({
-            url: 'http://2.xthtml5.sinaapp.com/ajax',
-            dataType: "jsonp",
-            jsonpCallback: "callback",
-            success: function (data) {
-                data = data || [];
-                var article;
-                for (var i = 0; i < data.length; i++) {
-                    article = "<div class='article-box'><a href='" + data[i][2] + "'>" + data[i][1] + "</a>" +
-                        '<img src="http://placehold.it/100x100" width="100" height="100" style="float: left;margin: 1em">' +
-                        '<p>' + data[i][3] + '</p>'
-                        + "</div>";
-                    $(".container").append(article);
-                }
-            }
-        });
-    }
-
     $(window).scroll(function(){
         $this = $(this);
         if($(document).height() - $this.height() - $this.scrollTop() < 400){
@@ -202,21 +182,20 @@ $(function () {
             $ifm.height(ifmHeight + 50);
         }
     });
-});
-
-function setIframe(count) {
-    var e = document.getElementById("ifm-id"),
-        clientWidth = document.body.clientWidth,
-        sty;
-    sty="height:"+(count+50)+"px;top:"+$(document).scrollTop()+"px;left:"+ (clientWidth>600?clientWidth*0.2+"px":clientWidth*0.1+"px");
-    e.setAttribute("style",sty);
-    e.scrolling="no";
-    //重置主页面高度，解决如果弹出文章高度超过页面高度时显示不完全。
-    if(count+$(document).scrollTop() > document.body.clientHeight){
-        document.body.height = count+$(document).scrollTop();
+    window.setIframe = function(count){
+        var e = document.getElementById("ifm-id"),
+            clientWidth = document.body.clientWidth,
+            sty;
+        sty="height:"+(count+50)+"px;top:"+$(document).scrollTop()+"px;left:"+ (clientWidth>600?clientWidth*0.2+"px":clientWidth*0.1+"px");
+        e.setAttribute("style",sty);
+        e.scrolling="no";
+        //重置主页面高度，解决如果弹出文章高度超过页面高度时显示不完全。
+        if(count+$(document).scrollTop() > document.body.clientHeight){
+            document.body.height = count+$(document).scrollTop();
+        }
+    };
+    window.closeIframe = function(){
+        $(".ifm").removeClass("ifm-show");
+        $("#ifm-content").removeClass("masks");
     }
-}
-function closeIframe(){
-    $(".ifm").removeClass("ifm-show");
-    $("#ifm-content").removeClass("masks");
-}
+});
