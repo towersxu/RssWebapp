@@ -294,21 +294,14 @@ pre {
   width: 60%;
   height: 0;
   position: absolute;
-  visibility: hidden;
+//  visibility: hidden;
   z-index: 9;
 //  overflow-y: scroll;
   background: #fff;
-  -webkit-transform: translate3d(-90em, 0, 0);
-  transform: translate3d(-90em, 0, 0);
-  -webkit-transition: -webkit-transform 0.4s ease-in-out;
-  transition: transform 0.4s ease-in-out;
-}
-.ifm-show{
-  visibility: visible;
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-  -webkit-transition: -webkit-transform 0.4s ease-in-out;
-  transition: transform 0.4s ease-in-out;
+  -webkit-transform: translate3d(70em, 0, 0);
+  transform: translate3d(-70em, 0, 0);
+  -webkit-transition: -webkit-transform 0.6s ease-in-out;
+  transition: transform 0.6s ease-in-out;
 }
 .ifm-contents{
   position: fixed;
@@ -332,6 +325,7 @@ pre {
   width: 32px;
   height: 32px;
   display: block;
+  cursor:pointer;
 }
 
 .sprite-Evernote {
@@ -387,5 +381,16 @@ pre {
   }
   .ifm{
     width: 80%;
+    -webkit-transform: translate3d(-40em, 0, 0);
+    transform: translate3d(-40em, 0, 0);
+    -webkit-transition: -webkit-transform 0.6s ease-in-out;
+    transition: transform 0.6s ease-in-out;
   }
+}
+.ifm-show{
+  visibility: visible;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-transition: -webkit-transform 0.6s ease-in-out;
+  transition: transform 0.6s ease-in-out;
 }

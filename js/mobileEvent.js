@@ -1,14 +1,13 @@
 /**
- * Created by Administrator on 15-3-28.
+ * Created by Towersxu on 15-3-28.
  */
 $.fn.extend({
     touchMove:function(fn,status){
         var x, y,startX,startY;
         this[0].addEventListener('touchstart', function(e){
-            if(e.targetTouches.length==1){
-                startX = e.targetTouches[0].screenX;
-                startY = e.targetTouches[0].screenY;
-            }
+            var touch = e.touches[0];
+                startX = touch.screenX;
+                startY = touch.screenY;
         }, false);
         this[0].addEventListener("touchmove",function(e){
             var touch = e.touches[0];
@@ -31,9 +30,9 @@ $.fn.extend({
         return this;
     },
     touchRight:function(fn){
-        return this.touchMove.call(this,fn,"right");
+        return this.touchMove(fn,"right");
     },
     touchLeft:function(fn){
-        return this.touchMove.call(this,fn,"left");
+        return this.touchMove(fn,"left");
     }
 });

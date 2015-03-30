@@ -12,6 +12,7 @@
     </div>
     <div id="close"></div>
     <script src="js/vendor/jquery-1.10.2.min.js"></script>
+    <script src="js/mobileEvent.js"></script>
     <script>
         var close_e = document.getElementById("close"),
                 e =  document.getElementById("art");
@@ -23,11 +24,17 @@
         function resizeIframe(){
             parent.setIframe(document.body.offsetHeight);
         }
-        close_e.addEventListener("click",function(){
+//        close_e.addEventListener("click",function(){
+//            parent.closeIframe();
+//            close_e.removeAttribute("class");
+//        });
+        $("#close").on("click",function(){
             parent.closeIframe();
-            close_e.removeAttribute("class");
+            $(this).removeClass("close");
         });
-
+        $("#art").touchLeft(function(){
+            close_e.click();
+        })
     </script>
 </body>
 </html>
