@@ -8,8 +8,9 @@ $(function () {
         $this,
         items,
         width = document.body.clientWidth,
+        openHeight,
         imgReg = /src=\S*\.(jpg|png|jpeg)\S*"/g,
-        startX, startY, x, y, article,
+        article,
         navObj = {
             "sprite-RSS": "sprite-RSS1",
             "sprite-RSS1": "sprite-RSS",
@@ -35,6 +36,7 @@ $(function () {
             data: data,
             jsonpCallback: "callbacks",
             success: function (data) {
+                window.scrollTo(0,0);
                 $container.empty();
                 index = 0;
                 content = data['key'];
@@ -81,7 +83,16 @@ $(function () {
     $("#RSS").on("click", function () {
         $(".detail-hide").toggleClass("detail-nav");
     });
-
+    $(".head-nav").on("click",function(e){
+        var tar = e.target,
+            url;
+        if(tar){
+            url = tar.getAttribute("source");
+            if(url){
+                window.location.href = url;
+            }
+        }
+    });
     $container.on("mouseenter", ".info", function () {
         $(this).siblings(".uptip").addClass("uptip-show");
     }).on("mouseleave", ".info", function () {
@@ -135,6 +146,7 @@ $(function () {
 
         //调用子页面方法，显示文章详细内容。
         myframe.window.get(description);
+        openHeight = $(document).scrollTop();
     }
 
     //取出固定数目条文章内容，显示在界面上。
@@ -207,6 +219,7 @@ $(function () {
         var e = document.getElementById("ifm-id"),
             clientWidth = document.body.clientWidth,
             sty;
+
         sty = "height:" + (count + 50) + "px;top:" + $(document).scrollTop() + "px;left:" + (clientWidth > 600 ? clientWidth * 0.2 + "px" : clientWidth * 0.1 + "px");
         e.setAttribute("style", sty);
         e.scrolling = "no";
@@ -220,5 +233,6 @@ $(function () {
     window.closeIframe = function () {
         $(".ifm").removeClass("ifm-show");
         $("#ifm-content").removeClass("masks");
+        window.scrollTo(0,openHeight);
     }
 });

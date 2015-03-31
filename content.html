@@ -10,7 +10,7 @@
         <div class="article-area" id="art">
         </div>
     </div>
-    <div id="close"></div>
+    <div id="close" class="close"></div>
     <script src="js/vendor/jquery-1.10.2.min.js"></script>
     <script src="js/mobileEvent.js"></script>
     <script>
@@ -18,19 +18,13 @@
                 e =  document.getElementById("art");
         function get(data){
             e.innerHTML = data;
-            close_e.setAttribute("class","close");
             resizeIframe();
         }
         function resizeIframe(){
             parent.setIframe(document.body.offsetHeight);
         }
-//        close_e.addEventListener("click",function(){
-//            parent.closeIframe();
-//            close_e.removeAttribute("class");
-//        });
         $("#close").on("click",function(){
             parent.closeIframe();
-            $(this).removeClass("close");
         });
         $("#art").touchLeft(function(){
             close_e.click();
