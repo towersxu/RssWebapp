@@ -155,28 +155,35 @@ $(function () {
             itemLength = items.length;
 
         if (itemLength > index) {
-            while (itemLength > index && index <= (loadCount + 1) * count) {
-                var item = items[index],
-                    title = item.title,
-                    description = item.description,
-                    imgSrc = description.match(imgReg),
-                    guid = item.guid || item.link,
-                    sortDes = description.replace(/<(.*?)>/g, "").substr(0, 200) + "...";
-                if (!imgSrc) {
-                    imgSrc = 'src=""';
-                } else {
-                    imgSrc = imgSrc[0];
-                }
-                article = "<div class='article-box' >" +
-                    "<div class='info' sourceUrl='" + guid + "'></div>" +
-                    "<div class='uptip'><span>查看原文</span></div>" +
-                    "<a href='javascript:void(0)'>" + title + "</a>" +
-                    '<img ' + imgSrc + 'onerror="this.style.display=\'none\';return true;"  width="100" height="100" style="float: left;margin: 1em;border:1px solid #fefefe">' +
-                    '<p class="article-content" idx="' + index + '">' +
-                    sortDes
-                    + "</p>" +
-                    "</div>" + article;
+            try {
+                while (itemLength > index && index <= (loadCount + 1) * count) {
+
+                    var item = items[index],
+                        title = item.title,
+                        description = item.description,
+                        imgSrc = description.match(imgReg),
+                        guid = item.guid || item.link,
+                        sortDes = description.replace(/<(.*?)>/g, "").substr(0, 200) + "...";
+                    if (!imgSrc) {
+                        imgSrc = 'src=""';
+                    } else {
+                        imgSrc = imgSrc[0];
+                    }
+                    article = "<div class='article-box' >" +
+                        "<div class='info' sourceUrl='" + guid + "'></div>" +
+                        "<div class='uptip'><span>查看原文</span></div>" +
+                        "<a href='javascript:void(0)'>" + title + "</a>" +
+                        '<img ' + imgSrc + 'onerror="this.style.display=\'none\';return true;"  width="100" height="100" style="float: left;margin: 1em;border:1px solid #fefefe">' +
+                        '<p class="article-content" idx="' + index + '">' +
+                        sortDes
+                        + "</p>" +
+                        "</div>" + article;
+
                 index++;
+              }
+            }catch(e){
+                console.log("RSS数据源异常！");
+                items.length = index;
             }
             $container.append(article);
             loadCount++;
