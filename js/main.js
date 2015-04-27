@@ -9,6 +9,7 @@ $(function () {
         items,
         width = document.body.clientWidth,
         openHeight,
+        offHeight,
         imgReg = /src=\S*\.(jpg|png|jpeg)\S*"/g,
         article,
         navObj = {
@@ -211,7 +212,8 @@ $(function () {
 
     $(window).scroll(function () {
         $this = $(this);
-        if ($(document).height() - $this.height() - $this.scrollTop() < 400) {
+        offHeight = $(document).height();
+        if (offHeight - $this.height() - $this.scrollTop() < 400) {
             $(".loadImg").addClass("load");
             addContainer(10);
         }
@@ -226,20 +228,26 @@ $(function () {
         var e = document.getElementById("ifm-id"),
             clientWidth = document.body.clientWidth,
             sty;
-
-        sty = "height:" + (count + 50) + "px;top:" + $(document).scrollTop() + "px;left:" + (clientWidth > 600 ? clientWidth * 0.2 + "px" : clientWidth * 0.1 + "px");
+        if(count < 0){
+            sty = "top:0;left:" + (clientWidth > 600 ? clientWidth * 0.2 + "px" : clientWidth * 0.1 + "px");
+        }else{
+            sty = "height:" + (count + 50) + "px;top:" + $(document).scrollTop() + "px;left:" + (clientWidth > 600 ? clientWidth * 0.2 + "px" : clientWidth * 0.1 + "px");
+        }
         e.setAttribute("style", sty);
         e.scrolling = "no";
 
         //重置主页面高度，解决如果弹出文章高度超过页面高度时显示不完全。
-        if (count + $(document).scrollTop() > document.body.clientHeight) {
+        if (count + $(document).scrollTop() !== document.body.clientHeight) {
             document.body.height = count + $(document).scrollTop();
         }
     };
+    window.removeIframe = function(){
 
+    };
     window.closeIframe = function () {
         $(".ifm").removeClass("ifm-show");
         $("#ifm-content").removeClass("masks");
         window.scrollTo(0,openHeight);
+        window.setIframe(-1);
     }
 });
